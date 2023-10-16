@@ -1,36 +1,55 @@
 <?php
-//this page is experimental version of student login page
-//this page is not used in the final version of the project
+
+/** @var yii\web\View $this */
+/** @var yii\bootstrap5\ActiveForm $form */
+
+/** @var app\models\LoginForm $model */
+
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
-$this->title ='Student Login';
+
+$this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site login">
-    <h1> <?=Html::encode($this->title) ?></h1>
+<div class="site-login">
+    <h1><?= Html::encode($this->title) ?></h1>
+
     <p>Please fill out the following fields to login:</p>
+
     <div class="row">
         <div class="col-lg-5">
-            <!-- create login field -->
+
             <?php $form = ActiveForm::begin([
                 'id' => 'student-login-form',
                 'fieldConfig' => [
-                    'template' => "{label}\n{input}\n{error}", //template is a property of the fieldConfig class
-                    'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'], //labelOptions is a property of the fieldConfig class
-                    'inputOptions' => ['class' => 'col-lg-3 form-control'], //inputOptions is a property of the fieldConfig class
-                    'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'], //errorOptions is a property of the fieldConfig class
+                    'template' => "{label}\n{input}\n{error}",
+                    'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
+                    'inputOptions' => ['class' => 'col-lg-3 form-control'],
+                    'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
                 ],
-            ]);
-            ?>
-            <?=$form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-            <?=$form->field($model, 'password')->passwordInput() ?>
-            <?=$form->field($model, 'rememberMe')->checkbox([
-                'template' => "<div class=\"custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>", //template is a property of the checkbox class
-            ]) ?>
+            ]); ?>
+
+            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+
+            <?= $form->field($model, 'password')->passwordInput() ?>
+
+<!--            --><?php //= $form->field($model, 'rememberMe')->checkbox([
+//                'template' => "<div class=\"custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
+//            ]) ?>
+
             <div class="form-group">
                 <div>
-                    <?=Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
                 </div>
             </div>
+
+            <?php ActiveForm::end(); ?>
+
+            <div style="color:#999;">
+                You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
+                To modify the username/password, please check out the code <code>app\models\User::$users</code>.
+            </div>
+
+        </div>
     </div>
 </div>

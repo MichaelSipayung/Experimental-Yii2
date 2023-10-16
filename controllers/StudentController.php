@@ -3,6 +3,8 @@ namespace app\controllers; //should be put at the top of the file
 use app\models\Country;
 use app\models\EntryForm; // EntryForm is a class that represents a form
 use app\models\CountryForm;
+use app\models\Student;
+use app\models\StudentLoginForm;
 use Yii; // Yii is a class that represents the Yii framework
 use yii\data\Pagination; // Pagination is a class that represents pagination
 use yii\Web\Controller;
@@ -48,9 +50,19 @@ class StudentController extends Controller // StudentController extends the Cont
             'pagination'=> $pagination // pagination is an object of the Pagination class
         ]);
     }
-    public function actionLogin(): string
+    public function actionLogin()
     {
-        return $this->render('login');
+        if(!Yii::$app->user->isGuest){ //if the user is not a guest
+            return $this->goHome(); //go to the home page
+        }
+        $model  = new Student(); //create an instance of the StudentLoginForm class
+        if($model->load(Yii::$app->request->post()) && $model->validateStudent()){
+            //if the form is submitted and the login is successful
+            echo "invalid username or password";
+            return $this->goBack(); //go to the previous page
+        }
+        $model->password = ''; //clear the password
+        return $this->render('login', ['model' => $model]); //render the login page
     }
 }
 ?>
