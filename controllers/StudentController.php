@@ -48,5 +48,9 @@ class StudentController extends Controller // StudentController extends the Cont
             'pagination'=> $pagination // pagination is an object of the Pagination class
         ]);
     }
+    public function actionLogin(): string
+    {
+        return $this->render('login');
+    }
 }
 ?>
