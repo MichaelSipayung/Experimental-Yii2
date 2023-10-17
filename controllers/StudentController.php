@@ -5,7 +5,9 @@ use app\models\EntryForm; // EntryForm is a class that represents a form
 use app\models\CountryForm;
 use app\models\Student;
 use app\models\StudentLoginForm;
+use app\models\StudentRegisterForm;
 use app\models\StudentResetForm;
+use app\models\StudentTokenForm;
 use Yii; // Yii is a class that represents the Yii framework
 use yii\data\Pagination; // Pagination is a class that represents pagination
 use yii\Web\Controller;
@@ -59,7 +61,7 @@ class StudentController extends Controller // StudentController extends the Cont
         $model_student  = new StudentLoginForm(); //create an instance of the StudentLoginForm class
         if($model_student->load(Yii::$app->request->post()) && $model_student->login()){
             //if the form is submitted and the login is successful
-            return $this->goBack(); //go to the previous page
+            return $this->goBack(); //go to the previous page, customize this to go to the home page
         }
         $model_student->password = ''; //clear the password
         return $this->render('login', ['model_student' => $model_student]); //render the login page
@@ -68,7 +70,7 @@ class StudentController extends Controller // StudentController extends the Cont
     public function actionLogout()
     {
         Yii::$app->user->logout(); //logout the user
-        return $this->goHome(); //go to the home page
+        return $this->goHome(); //go to the previous page, customize this to go to the home page
     }
     //action for reset password
     public function actionResetPassword()
@@ -77,10 +79,28 @@ class StudentController extends Controller // StudentController extends the Cont
         if($model_student_reset->load(Yii::$app->request->post()) && 
             $model_student_reset->resetPassword()){
             //if the form is submitted and the password is reset
-            return $this->goBack(); //go to the previous page
+            return $this->goBack(); //go to the previous page, customize this to go to the home page
         }
         //$model_student_reset->password = ''; //clear the password
         return $this->render('reset-password', ['model_student_reset' => $model_student_reset]); //render the reset password page
+    }
+    public function actionRegisterStudent(){ //action for handling registration form
+        $model_student_register = new StudentRegisterForm(); //create an instance of the StudentRegisterForm class
+        if($model_student_register->load(Yii::$app->request->post()) && $model_student_register->registerStudent()){
+            //if the form is submitted and the registration is successful
+            return $this->goBack(); //go to the previous page, customize this to go to the home page
+        }
+        return $this->render('register-student',['model_student_register'=>$model_student_register]); //render the registration page
+
+    }
+    //action for token student form (for student to input the access token)
+    public function actionTokenStudent() {
+        $model_student_token = new StudentTokenForm(); //create an instance of the StudentTokenForm class
+        //if the form is submitted and the access token is valid
+        if($model_student_token->load(Yii::$app->request->post()) && $model_student_token->validateAccessToken()){
+            return $this->goBack(); //go to the previous page, customize this to go to the home page
+        }
+        return $this->render('token-student',['model_student_token'=>$model_student_token]); //render the token student page
     }
 }
 ?>
