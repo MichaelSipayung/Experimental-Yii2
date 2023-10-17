@@ -17,18 +17,23 @@ class StudentLoginForm extends Model {
            // ['password','validatePassword'],
         ];
     }
-  /*  public function login(): bool //method to handle login
+    public function login(): bool //find username and and test the current password
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(),$this->rememberMe ? 3600*24*30 : 0);
+        if($this->validate()){ //if the given data is valid
+            $student = Student::find()->where(['username'=>$this->username])->one();
+            if ($student) {
+                if ($student->password === $this->password) {
+                    return true;
+                }
+                else { //if the password is not correct
+                    $this->addError('password','Password salah, silahkan coba lagi');
+                }
+            }
+            else { //if the username is not found
+                $this->addError('username','Username tersebut tidak terdaftar');
+            }
         }
         return false;
     }
-    public function getUser(){
-        if ($this->_user === false) {
-            $this->_user = Student::findByUsername($this->username);
-        }
-        return $this->_user;
-    }*/
 }
 ?>

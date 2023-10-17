@@ -5,6 +5,7 @@ use app\models\EntryForm; // EntryForm is a class that represents a form
 use app\models\CountryForm;
 use app\models\Student;
 use app\models\StudentLoginForm;
+use app\models\StudentResetForm;
 use Yii; // Yii is a class that represents the Yii framework
 use yii\data\Pagination; // Pagination is a class that represents pagination
 use yii\Web\Controller;
@@ -55,14 +56,31 @@ class StudentController extends Controller // StudentController extends the Cont
         if(!Yii::$app->user->isGuest){ //if the user is not a guest
             return $this->goHome(); //go to the home page
         }
-        $model  = new Student(); //create an instance of the StudentLoginForm class
-        if($model->load(Yii::$app->request->post()) && $model->validateStudent()){
+        $model_student  = new StudentLoginForm(); //create an instance of the StudentLoginForm class
+        if($model_student->load(Yii::$app->request->post()) && $model_student->login()){
             //if the form is submitted and the login is successful
-            echo "invalid username or password";
             return $this->goBack(); //go to the previous page
         }
-        $model->password = ''; //clear the password
-        return $this->render('login', ['model' => $model]); //render the login page
+        $model_student->password = ''; //clear the password
+        return $this->render('login', ['model_student' => $model_student]); //render the login page
+    }
+    //action for logout
+    public function actionLogout()
+    {
+        Yii::$app->user->logout(); //logout the user
+        return $this->goHome(); //go to the home page
+    }
+    //action for reset password
+    public function actionResetPassword()
+    {
+        $model_student_reset  = new StudentResetForm(); //create an instance of the StudentLoginForm class
+        if($model_student_reset->load(Yii::$app->request->post()) && 
+            $model_student_reset->resetPassword()){
+            //if the form is submitted and the password is reset
+            return $this->goBack(); //go to the previous page
+        }
+        //$model_student_reset->password = ''; //clear the password
+        return $this->render('reset-password', ['model_student_reset' => $model_student_reset]); //render the reset password page
     }
 }
 ?>
