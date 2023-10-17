@@ -81,5 +81,12 @@ class StudentDataDiriForm extends Model {
         }
         return false;
     }
+    //get gender list from database
+    public function getGenderList(): array
+    {
+        $sql = 'SELECT jenis_kelamin FROM t_jenis_kelamin';
+        $result = Yii::$app->db->createCommand($sql)->queryAll();
+        return $result;
+    }
 }
 ?>
