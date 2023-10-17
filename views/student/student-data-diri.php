@@ -19,13 +19,9 @@ $title  = 'Data Diri Mahasiswa';
     <!-- display the label for nama on the left -->
     <?php echo $form->field($model_student_data_diri,'nama')->label('Nama'); ?>
     <!-- display the label for jenis_kelamin_id on the left -->
-    <div>
-    Jenis Kelamin
-    <?= $form->field($model_student_data_diri, 'jenis_kelamin_id')->checkbox(['label' => 'Pria', 'value' => '0']) ?>
-    <?= $form->field($model_student_data_diri, 'jenis_kelamin_id')->checkbox(['label' => 'Wanita', 'value' => '1']) ?>
-    </div>
-
+    <?= $form->field($model_student_data_diri, 'jenis_kelamin_id')->dropDownList(['0' => 'Pria', '1' => 'Wanita']) ?>
     <!-- display the label for tanggal_lahir on the left -->
+
     <?php echo $form->field($model_student_data_diri,'tanggal_lahir')->label('Tanggal Lahir'); ?>
     <!-- display the label for tempat_lahir on the left -->
     <?php echo $form->field($model_student_data_diri,'tempat_lahir')->label('Tempat Lahir'); ?>
