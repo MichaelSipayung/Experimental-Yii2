@@ -60,10 +60,12 @@ class StudentRegisterForm extends Model{
             $student->verf_code = $this->generateAccessToken();
             if($student->save()){ //if the student is saved
                 //then send access token via WhatsApp
-                $link ='<a href="http://localhost:8080/index.php?r=student%2Ftoken-student"> Klik tautan berikut</a>';
-                $message = "Hallo ".$student->username.", anda telah melakukan pendaftaran pada Website PMB IT Del.".
-                " Masukan kode verifikasi berikut agar akun anda dapat digunakan\n\n Kode : ".$student->verf_code."\n".
-                '{echo $link}'. "\n\nSalam,\n\n\n Panitia PMB IT Del";
+                $link ='http://localhost:8080/index.php?r=student%2Ftoken-student';
+                $message = "Hallo *".$student->username."*, anda telah melakukan pendaftaran pada Website PMB IT Del.".
+                " Masukan kode verifikasi berikut pada link yang diberikan agar akun anda dapat digunakan\n\nKode verifikasi : *".
+                $student->verf_code."*\n\n".
+                $link. "\n\nTerima kasih\n\nSalam,"."\n\n\nPanitia PMB IT Del"."\n\n\n".
+                "*Pesan ini dikirim secara otomatis oleh sistem*";
                 $send = new StudentResetForm();
                 $send->sendWhatsApp($student->phone_number,$message);
                 return true;

@@ -11,7 +11,8 @@ class StudentResetForm extends Model {
             [['username'],'required'],
         ];
     }
-    //whatsApp api for sending message
+    //whatsApp api for sending message, need to be improved to handle error
+    //while sending message to the user (e.g. no internet connection)
     public function sendWhatsApp($phone, $message){
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -30,7 +31,9 @@ class StudentResetForm extends Model {
         $err = curl_error($curl);
         curl_close($curl);
     }
-    //method for generate random string
+    //method for generate random string, used for generating new password automatically
+    //the current implementation is not safe, because it is possible to have duplicate
+    //need to be improved, but password reset is not the main focus of this project
     public function generateRandomString($length = 10): string
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -41,7 +44,8 @@ class StudentResetForm extends Model {
         }
         return $randomString;
     }
-    //reset password using  using whatsApp api and send the new password to the user
+    //reset password using  whatsApp api and send the new password to the user
+    //need more error handling to quarantine the user receive the new password
     public function resetPassword(): bool
     {
         if($this->validate()){ //if the given data is valid
@@ -50,7 +54,14 @@ class StudentResetForm extends Model {
                 $new_password = $this->generateRandomString(8); //generate random string
                 $student->password = $new_password; //set the new password
                 if($student->save()){ //if the new password is saved
-                    $message = "Password baru anda adalah: ".$new_password;
+                    $link ='http://localhost:8080/index.php?r=student%2Flogin';
+                    $message = "Hallo *".$student->username."*, anda telah melakukan reset password pada Website PMB IT Del."
+                    ." Silahkan login dengan password baru anda melalui link dibawah.".
+                        "\n\nPassword anda : *".
+                        $new_password."*\n\n". "\n".
+                        $link. "\n\nTerima kasih\n\nSalam,"."\n\n\nPanitia PMB IT Del"."\n\n\n".
+                        "*Pesan ini dikirim secara otomatis oleh sistem*";
+                    //$message = "Password baru anda adalah: ".$new_password;
                     $this->sendWhatsApp($student->phone_number,$message); //send the new password to the user
                     return true;
                 }
