@@ -3,8 +3,8 @@
 //model, may be changed later if needed, the controller is StudentController.php and the view is
 //student-data-orang-tua.php, action is student-data-orang-tua, it's also possible to change later
 namespace app\models;
-use Yii;
 use yii\base\Model;
+use app\models\StudentDataOrangTua;
 use yii\db\ActiveRecord;
 class StudentDataOrangTuaForm extends Model{
     //current available data members, may be added later
@@ -90,41 +90,44 @@ class StudentDataOrangTuaForm extends Model{
     //to ensure the data is inserted successfully
     public function insertDataOrangTua() {
         if($this->validate()){
-            $data_insert_ortu  = new StudentDataOrangTua();
-            $data_insert_ortu->nama_ayah_kandung = $this->nama_ayah;
-            $data_insert_ortu->nama_ibu_kandung = $this->nama_ibu;
-            $data_insert_ortu->nik_ayah = $this->nik_ayah;
-            $data_insert_ortu->nik_ibu = $this->nik_ibu;
+            //$user_id = Yii::$app->user->identity->id;
+                $data_insert_ortu = StudentDataOrangTua::findOne(13547);
+                $data_insert_ortu->nama_re = $this->nama_ayah;
 
-            $data_insert_ortu->tanggal_lahir_ayah = $this->tgl_lahir_ayah;
-            $data_insert_ortu->tanggal_lahir_ibu = $this->tgl_lahir_ibu;
+                /*$data_insert_ortu->nama_ibu_kandung = $this->nama_ibu;
+                $data_insert_ortu->nik_ayah = $this->nik_ayah;
+                $data_insert_ortu->nik_ibu = $this->nik_ibu; */
 
-            $data_insert_ortu->pendidikan_ayah_id = $this->pendidikan_ayah;
-            $data_insert_ortu->pendidikan_ibu_id = $this->pendidikan_ibu;
+                /*$data_insert_ortu->tanggal_lahir_ayah = $this->tgl_lahir_ayah;
+                $data_insert_ortu->tanggal_lahir_ibu = $this->tgl_lahir_ibu;
 
-            $data_insert_ortu->alamat_orang_tua = $this->alamat_ortu;
-            //to do: add the field to table t_pendaftar
-            /*$data_insert->keluruhan = $this->keluruhan;
-            $data_insert->provinsi = $this->provinsi;
-            $data_insert->kabupaten = $this->kabupaten;
-            $data_insert->kecamatan = $this->kecamatan;*/
+                $data_insert_ortu->pendidikan_ayah_id = $this->pendidikan_ayah;
+                $data_insert_ortu->pendidikan_ibu_id = $this->pendidikan_ibu;
 
-            $data_insert_ortu->kode_pos_orang_tua = $this->kode_pos;
-            $data_insert_ortu->no_hp_ortu = $this->no_hp_ortu;
+                $data_insert_ortu->alamat_orang_tua = $this->alamat_ortu;*/
 
-            $data_insert_ortu->pekerjaan_ayah_id = $this->pekerjaan_ayah;
-            $data_insert_ortu->pekerjaan_ibu_id = $this->pekerjaan_ibu;
+                //to do: add the field to table t_pendaftar
+                /*$data_insert->keluruhan = $this->keluruhan;
+                $data_insert->provinsi = $this->provinsi;
+                $data_insert->kabupaten = $this->kabupaten;
+                $data_insert->kecamatan = $this->kecamatan;*/
 
-            $data_insert_ortu->penghasilan_ayah = $this->penghasilan_ayah;
-            $data_insert_ortu->penghasilan_ibu = $this->penghasilan_ibu;
+               /* $data_insert_ortu->kode_pos_orang_tua = $this->kode_pos;
+                $data_insert_ortu->no_hp_ortu = $this->no_hp_ortu;
 
-            if($data_insert_ortu->save()) {
-                return true;
+                $data_insert_ortu->pekerjaan_ayah_id = $this->pekerjaan_ayah;
+                $data_insert_ortu->pekerjaan_ibu_id = $this->pekerjaan_ibu;
+
+                $data_insert_ortu->penghasilan_ayah = $this->penghasilan_ayah;
+                $data_insert_ortu->penghasilan_ibu = $this->penghasilan_ibu; */
+                if($data_insert_ortu->save()) {
+                    return true;
+                }
+                else{
+                    $this->addError("Error", "Data Orang Tua Gagal Disimpan");
+                }
             }
-            else{
-                $this->addError("Error", "Data Orang Tua Gagal Disimpan");
-            }
-        }
+
         return false;
     }
 }

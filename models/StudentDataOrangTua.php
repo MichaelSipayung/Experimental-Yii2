@@ -6,7 +6,7 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
-class StudentDataOrangTua extends Model{
+class StudentDataOrangTua extends ActiveRecord{
     //table name
     public static function tableName(){
         return 't_pendaftar';
