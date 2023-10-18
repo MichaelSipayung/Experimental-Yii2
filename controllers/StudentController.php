@@ -5,6 +5,7 @@ use app\models\EntryForm; // EntryForm is a class that represents a form
 use app\models\CountryForm;
 use app\models\Student;
 use app\models\StudentDataDiriForm;
+use app\models\StudentDataOrangTuaForm;
 use app\models\StudentLoginForm;
 use app\models\StudentRegisterForm;
 use app\models\StudentResetForm;
@@ -103,7 +104,7 @@ class StudentController extends Controller // StudentController extends the Cont
         }
         return $this->render('token-student',['model_student_token'=>$model_student_token]); //render the token student page
     }
-    public function actionStudentDataDiri() {
+    public function actionStudentDataDiri() { //action for personal information form
         //action for personal information form
         $model_student_data_diri = new StudentDataDiriForm(); //create an instance of the StudentDataDiriForm class
         if($model_student_data_diri->load(Yii::$app->request->post())
@@ -112,6 +113,15 @@ class StudentController extends Controller // StudentController extends the Cont
         }
         return $this->render('student-data-diri',
             ['model_student_data_diri'=>$model_student_data_diri]); //render the personal information page(data diri)
+    }
+    public function actionStudentDataOrangTua(){ //action for parent information form
+        $model_student_data_orang_tua = new StudentDataOrangTuaForm(); //create an instance of the StudentDataOrangTuaForm class
+        if($model_student_data_orang_tua->load(Yii::$app->request->post()) &&
+            $model_student_data_orang_tua->insertDataOrangTua()){
+            return $this->goBack(); //go to the previous page, customize this to go to the home page
+        }
+        return $this->render('student-data-orang-tua',
+            ['model_student_data_orang_tua'=>$model_student_data_orang_tua]); //render the parent information page(data orang tua)
     }
 }
 ?>
