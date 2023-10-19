@@ -9,9 +9,11 @@ class StudentDataOForm extends Model{
  //current available data members, may be added later
  public $nama_ayah_kandung;public $nama_ibu_kandung;public $nik_ayah;
  public $nik_ibu;public $tanggal_lahir_ayah;public $tanggal_lahir_ibu;
- public $pendidikan_ayah_id;public $pendidikan_ibu_id;public $alamat_orang_tua;
- public $keluruhan;public $provinsi;public $kabupaten;
- public $kecamatan;public $kode_pos_orang_tua;public $no_hp_orangtua;
+ public $pendidikan_ayah;public $pendidikan_ibu;public $alamat_orang_tua;
+ public $kelurahan;
+ public $provinsi;public $kabupaten;
+ public $kecamatan;
+ public $kode_pos_orang_tua;public $no_hp_orangtua;
  public $pekerjaan_ayah;public $pekerjaan_ibu;public $penghasilan_ayah;
  public $penghasilan_ibu;
  //parent education list
@@ -62,8 +64,8 @@ class StudentDataOForm extends Model{
      //more test needed to ensure the data is valid
       return [
            [['nama_ayah_kandung','nama_ibu_kandung','tanggal_lahir_ayah','tanggal_lahir_ibu',
-               'pendidikan_ayah_id', 'pendidikan_ibu_id','pekerjaan_ayah','pekerjaan_ibu',
-               'penghasilan_ayah','penghasilan_ibu'
+               'pendidikan_ayah', 'pendidikan_ibu','pekerjaan_ayah','pekerjaan_ibu',
+               'penghasilan_ayah','penghasilan_ibu','kelurahan','provinsi','kecamatan','kabupaten'
                ,'alamat_orang_tua',/*'keluruhan','provinsi','kabupaten','kecamatan,'*/'no_hp_orangtua',], 'required'],
 
           ['nik_ayah','string','min'=>16 , 'max'=>16,'message'=>'NIK harus 16 digit'],
@@ -99,8 +101,8 @@ class StudentDataOForm extends Model{
 
                 'tanggal_lahir_ayah' => $this->tanggal_lahir_ayah,
                 'tanggal_lahir_ibu' => $this->tanggal_lahir_ibu,
-                'pendidikan_ayah_id' => $this->pendidikan_ayah_id,
-                'pendidikan_ibu_id' => $this->pendidikan_ibu_id,
+                'pendidikan_ayah_id' => $this->pendidikan_ayah,
+                'pendidikan_ibu_id' => $this->pendidikan_ibu,
 
                 'alamat_orang_tua' => $this->alamat_orang_tua,
                 'kode_pos_orang_tua' => $this->kode_pos_orang_tua,
@@ -111,10 +113,10 @@ class StudentDataOForm extends Model{
                 'penghasilan_ibu' => $this->penghasilan_ibu,
                 'no_hp_orangtua' => $this->no_hp_orangtua,
 
-                /*'keluruhan' => $this->keluruhan,
-                'provinsi' => $this->provinsi,
-                'kabupaten' => $this->kabupaten,
-                'kecamatan' => $this->kecamatan,*/ //modify later
+                'alamat_kec_orangtua' => $this->kecamatan,
+                'alamat_prov_orangtua' => $this->provinsi,
+                'alamat_kel_orangtua' => $this->kelurahan,
+                'alamat_kab_orangtua' => $this->kabupaten,//modify later
             ];
             try{ //try to insert data to database, since createCommand() may throw exception
                 Yii::$app->db->createCommand()

@@ -1,7 +1,9 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap5\activeForm;
+$title = 'Data Orang Tua';
 ?>
+<h1><?= Html::encode($title) ?></h1>
 <?php $form = ActiveForm::begin(['layout' => 'horizontal']) ?>
 <?php echo $form->field($model_student_data_o,'nama_ayah_kandung')->label('Nama Ayah Kandung'); ?>
 <?php echo $form->field($model_student_data_o,'nama_ibu_kandung')->label('Nama Ibu Kandung'); ?>
@@ -32,15 +34,30 @@ echo $form->field($model_student_data_o, 'tanggal_lahir_ibu')->widget(\yii\jui\D
     ->label('Tanggal Lahir Ibu');
 ?>
 <?php
-    echo $form->field($model_student_data_o, 'pendidikan_ayah_id')
+    echo $form->field($model_student_data_o, 'pendidikan_ayah')
         ->dropDownList(\app\models\StudentDataOrangTuaForm::$education, ['prompt' => 'Pilih Pendidikan Terakhir Ayah']);
 ?>
 <?php
-    echo $form->field($model_student_data_o, 'pendidikan_ibu_id')
+    echo $form->field($model_student_data_o, 'pendidikan_ibu')
         ->dropDownList(\app\models\StudentDataOrangTuaForm::$education, ['prompt' => 'Pilih Pendidikan  Terakhir Ibu']);
     ?>
 <?php echo $form->field($model_student_data_o,'alamat_orang_tua')->label('Alamat Orang Tua'); ?>
-
+<?php echo $form->field($model_student_data_o,'kelurahan')->label('Keluruhan'); ?>
+<?php
+//map for all indonesia province, need more improvement like store in model
+echo $form->field($model_student_data_o, 'provinsi')
+    //fetch alll data in $provinces variable to dropdown menu
+    ->dropDownList(\app\models\StudentDataDiriForm::$provinces, ['prompt' => 'Pilih Provinsi','id' => 'province-dropdown']);
+//->dropDownList(['0' => 'Pria', '1' => 'Wanita'])
+?>
+<?php
+echo $form->field($model_student_data_o, 'kabupaten')
+    ->dropDownList(\app\models\StudentDataDiriForm::$cities, ['prompt' => 'Pilih Kabupaten/ Kota']);
+?>
+<?php
+echo $form->field($model_student_data_o, 'kecamatan')
+    ->dropDownList(\app\models\StudentDataDiriForm::$cities, ['prompt' => 'Pilih Kecamatan']);
+?>
 <?php //echo $form->field($model_student_data_orang_tua,'kelurahan')->label('Kelurahan'); ?>
 <?php
     /*echo $form->field($model_student_data_o, 'provinsi')
