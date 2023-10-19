@@ -3,12 +3,12 @@
 //model, may be changed later if needed, the controller is StudentController.php and the view is
 //student-data-orang-tua.php, action is student-data-orang-tua, it's also possible to change later
 namespace app\models;
+use Yii;
 use yii\base\Model;
-use app\models\StudentDataOrangTua;
 use yii\db\ActiveRecord;
 class StudentDataOrangTuaForm extends Model{
     //current available data members, may be added later
-    public $nama_ayah;public $nama_ibu;public $nik_ayah;
+    public $nama_ayah_kandung;public $nama_ibu;public $nik_ayah;
     public $nik_ibu;public $tgl_lahir_ayah;public $tgl_lahir_ibu;
     public $pendidikan_ayah;public $pendidikan_ibu;public $alamat_ortu;
     public $keluruhan;public $provinsi;public $kabupaten;
@@ -62,7 +62,7 @@ class StudentDataOrangTuaForm extends Model{
        //rules for all data members, need more improvement
         //more test needed to ensure the data is valid
          return [
-              [['nama_ayah','nama_ibu','tgl_lahir_ayah','tgl_lahir_ibu'
+              [['nama_ayah_kandung','nama_ibu','tgl_lahir_ayah','tgl_lahir_ibu'
                   ,'alamat_ortu','keluruhan','provinsi','kabupaten','kecamatan','no_hp_ortu',], 'required'],
 
              ['nik_ayah','string','min'=>16 , 'max'=>16,'message'=>'NIK harus 16 digit'],
@@ -79,7 +79,7 @@ class StudentDataOrangTuaForm extends Model{
              ['kode_pos','match','pattern'=>'/^[0-9]*$/','message'=>'Kode Pos tidak boleh mengandung huruf'],
              ['kode_pos','string','min'=>5,'max'=>5,'message'=>'Kode Pos harus 5 digit'],
 
-             ['nama_ayah','match','pattern'=>'/^[a-zA-Z ]*$/','message'=>'Nama tidak boleh mengandung angka'],
+             ['nama_ayah_kandung','match','pattern'=>'/^[a-zA-Z ]*$/','message'=>'Nama tidak boleh mengandung angka'],
              ['nama_ibu','match','pattern'=>'/^[a-zA-Z ]*$/','message'=>'Nama tidak boleh mengandung angka'],
 
              //rules for salary
@@ -88,11 +88,12 @@ class StudentDataOrangTuaForm extends Model{
     }
     //insert all data members into database, consider for more exception handling
     //to ensure the data is inserted successfully
-    public function insertDataOrangTua() {
+    public function insertDataOrangTua(): bool
+    {
         if($this->validate()){
             //$user_id = Yii::$app->user->identity->id;
-                $data_insert_ortu = StudentDataOrangTua::findOne(13547);
-                $data_insert_ortu->nama_re = $this->nama_ayah;
+                //$data_insert_ortu = StudentDataOrangTua::findOne(13547);
+                //$data_insert_ortu->nama_re = $this->nama_ayah;
 
                 /*$data_insert_ortu->nama_ibu_kandung = $this->nama_ibu;
                 $data_insert_ortu->nik_ayah = $this->nik_ayah;
@@ -120,14 +121,21 @@ class StudentDataOrangTuaForm extends Model{
 
                 $data_insert_ortu->penghasilan_ayah = $this->penghasilan_ayah;
                 $data_insert_ortu->penghasilan_ibu = $this->penghasilan_ibu; */
-                if($data_insert_ortu->save()) {
+                /*if($data_insert_ortu->save()) {
                     return true;
                 }
                 else{
                     $this->addError("Error", "Data Orang Tua Gagal Disimpan");
-                }
+                }*/
+                $command  = Yii::$app->db->createCommand();
+                //set the table name and insert data to specific pendaftar_id
+                //$command->sql('INSERT INTO t_pendaftar (nama_ayah_kandung) VALUES (:nama_ayah) WHERE pendaftar_id = 13557');
+                $command->setSql( "UPDATE t_pendaftar SET nama_ayah_kandung=\"arnold\" where  pendaftar_id = 13557");
+                //$command->bindValues(['nama_ayah' => $this->nama_ayah]);
+                //execute the query
+                $command->execute();
+                return true;
             }
-
         return false;
     }
 }

@@ -31,9 +31,18 @@ $title  = 'Data Diri Mahasiswa';
         echo $form->field($model_student_data_diri, 'jenis_kelamin')
             ->dropDownList(\app\models\StudentDataDiriForm::$gen, ['prompt' => 'Pilih Jenis Kelamin']);
     ?>
-
-    <?php echo $form->field($model_student_data_diri,'tanggal_lahir')->label('Tanggal Lahir')
-        ->textInput(['placeholder'=>'Contoh: 2002-01-31']) ; ?>
+    <?php
+    echo $form->field($model_student_data_diri, 'tanggal_lahir')->widget(\yii\jui\DatePicker::class, [
+        'dateFormat' => 'yyyy-MM-dd',
+        'options' => ['class' => 'form-control'],
+        'clientOptions' => [
+            'changeYear' => true,
+            'changeMonth' => true,
+            'yearRange' => '-100:+0',
+        ],
+    ])->textInput(['placeholder'=>'Contoh: 2002-01-31'])
+        ->label('Tanggal Lahir');
+    ?>
     <!-- display the label for tempat_lahir on the left -->
     <?php echo $form->field($model_student_data_diri,'tempat_lahir')->label('Tempat Lahir'); ?>
     <!-- display the label for agama_id on the left -->
