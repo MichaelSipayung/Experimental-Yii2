@@ -8,7 +8,7 @@ use yii\base\Model;
 use yii\db\ActiveRecord;
 class StudentDataOrangTua extends ActiveRecord {
     //table name
-    public static function tableName(){
+    public static function tableName() {
         return 't_pendaftar';
     }
 }
