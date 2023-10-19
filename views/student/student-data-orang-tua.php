@@ -13,9 +13,6 @@ $title  = 'Data Orang Tua Mahasiswa';
 ?>
 <h1><?= Html::encode($title) ?></h1>
 <?php $form = ActiveForm::begin(['layout' => 'horizontal']) ?>
-<<<<<<< HEAD
-<?php echo $form->field($model_student_data_orang_tua,'nama_ayah_kandung')->label('Nama Ayah Kandung'); ?> 
-=======
 <?php echo $form->field($model_student_data_orang_tua,'nama_ayah_kandung')->label('Nama Ayah Kandung'); ?>
 <?php
 /* class someThing extends Model{
@@ -32,7 +29,6 @@ $title  = 'Data Orang Tua Mahasiswa';
 } */
 ?>
 
->>>>>>> c536818b4298724b0989034d6eaf8a8a755cb749
 <!-- end of the form -->
 <div class="form-group">
     <div>

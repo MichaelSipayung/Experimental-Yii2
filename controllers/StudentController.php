@@ -5,6 +5,7 @@ use app\models\EntryForm; // EntryForm is a class that represents a form
 use app\models\CountryForm;
 use app\models\Student;
 use app\models\StudentDataDiriForm;
+use app\models\StudentDataOForm;
 use app\models\StudentDataOrangTuaForm;
 use app\models\StudentLoginForm;
 use app\models\StudentRegisterForm;
@@ -116,18 +117,21 @@ class StudentController extends Controller // StudentController extends the Cont
     }
     public function actionStudentDataOrangTua(){ //action for parent information form
         $model_student_data_orang_tua = new StudentDataOrangTuaForm(); //create an instance of the StudentDataOrangTuaForm class
-<<<<<<< HEAD
         if($model_student_data_orang_tua->load(Yii::$app->request->post()) 
             &&$model_student_data_orang_tua->insertDataOrangTua()){
-=======
-        //   $model_student_data_orang_tua->insertDataOrangTua();
-        if($model_student_data_orang_tua->load(Yii::$app->request->post())
-            && $model_student_data_orang_tua->insertDataOrangTua()){
->>>>>>> c536818b4298724b0989034d6eaf8a8a755cb749
             return $this->goBack(); //go to the previous page, customize this to go to the home page
         }
         return $this->render('student-data-orang-tua',
             ['model_student_data_orang_tua'=>$model_student_data_orang_tua]); //render the parent information page(data orang tua)
+    }
+    public function actionStudentDataOTua(){
+        $model_student_data_o_tua = new StudentDataOForm(); //create an instance of the StudentDataOForm class
+        if($model_student_data_o_tua->load(Yii::$app->request->post()) 
+            &&$model_student_data_o_tua->insertDataOTua()){
+            return $this->goBack(); //go to the previous page, customize this to go to the home page
+        }
+        return $this->render('student-data-o-tua',
+            ['model_student_data_o_tua'=>$model_student_data_o_tua]); //render the parent information page(data orang tua)
     }
 }
 ?>

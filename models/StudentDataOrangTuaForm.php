@@ -92,21 +92,8 @@ class StudentDataOrangTuaForm extends Model{
     {
         if($this->validate()){
             //$user_id = Yii::$app->user->identity->id;
-<<<<<<< HEAD
-                //$data_insert_ortu = StudentDataOrangTua::find()->where(['pendaftar_id' => 1])->one();
-                //search data by pendaftar_id using pure sql command
-                $data_ortu = 'select * from t_pendaftars where pendaftar_id = 1';
-                //execute the sql command using create command
-                $data_insert_ortu = Yii::$app->db->createCommand($data_ortu)->queryOne();
-                //update the data using sql command
-                $data_insert_ortu['nama_ayah_kandungs'] = $this->nama_ayah_kandung;
-                //and insert data using sql command
-                //$data_insert_ortu->nama_ayah_kandung = $this->nama_ayah_kandung;
-                //$data_insert_ortu->nama_ayah_kandung = $this->nama_ayah_kandung;
-=======
                 //$data_insert_ortu = StudentDataOrangTua::findOne(13547);
                 //$data_insert_ortu->nama_re = $this->nama_ayah;
->>>>>>> c536818b4298724b0989034d6eaf8a8a755cb749
 
                 /*$data_insert_ortu->nama_ibu_kandung = $this->nama_ibu;
                 $data_insert_ortu->nik_ayah = $this->nik_ayah;
@@ -134,11 +121,7 @@ class StudentDataOrangTuaForm extends Model{
 
                 $data_insert_ortu->penghasilan_ayah = $this->penghasilan_ayah;
                 $data_insert_ortu->penghasilan_ibu = $this->penghasilan_ibu; */
-<<<<<<< HEAD
-                if($data_insert_ortu) {
-=======
                 /*if($data_insert_ortu->save()) {
->>>>>>> c536818b4298724b0989034d6eaf8a8a755cb749
                     return true;
                 }
                 else{
