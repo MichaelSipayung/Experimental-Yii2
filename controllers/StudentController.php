@@ -115,15 +115,6 @@ class StudentController extends Controller // StudentController extends the Cont
         return $this->render('student-data-diri',
             ['model_student_data_diri'=>$model_student_data_diri]); //render the personal information page(data diri)
     }
-    public function actionStudentDataOrangTua(){ //action for parent information form
-//        $model_student_data_orang_tua = new StudentDataOrangTuaForm(); //create an instance of the StudentDataOrangTuaForm class
-//        if($model_student_data_orang_tua->load(Yii::$app->request->post())
-//            &&$model_student_data_orang_tua->insertDataOrangTua()){
-//            return $this->goBack(); //go to the previous page, customize this to go to the home page
-//        }
-        //return $this->render('student-data-orang-tua',
-            //['model_student_data_orang_tua'=>$model_student_data_orang_tua]); //render the parent information page(data orang tua)
-    }
     public function actionStudentDataOTua(){
         $model_student_data_o = new StudentDataOForm(); //create an instance of the StudentDataOForm class
         if($model_student_data_o->load(Yii::$app->request->post())
@@ -132,6 +123,9 @@ class StudentController extends Controller // StudentController extends the Cont
         }
         return $this->render('student-data-o-tua',
             ['model_student_data_o'=>$model_student_data_o]); //render the parent information page(data orang tua)
+    }
+    public function actionStudentExtra(){
+
     }
 }
 ?>
