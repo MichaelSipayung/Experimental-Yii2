@@ -35,11 +35,11 @@ echo $form->field($model_student_data_o, 'tanggal_lahir_ibu')->widget(\yii\jui\D
 ?>
 <?php
     echo $form->field($model_student_data_o, 'pendidikan_ayah')
-        ->dropDownList(\app\models\StudentDataOrangTuaForm::$education, ['prompt' => 'Pilih Pendidikan Terakhir Ayah']);
+        ->dropDownList(\app\models\StudentDataOForm::$education, ['prompt' => 'Pilih Pendidikan Terakhir Ayah']);
 ?>
 <?php
     echo $form->field($model_student_data_o, 'pendidikan_ibu')
-        ->dropDownList(\app\models\StudentDataOrangTuaForm::$education, ['prompt' => 'Pilih Pendidikan  Terakhir Ibu']);
+        ->dropDownList(\app\models\StudentDataOForm::$education, ['prompt' => 'Pilih Pendidikan  Terakhir Ibu']);
     ?>
 <?php echo $form->field($model_student_data_o,'alamat_orang_tua')->label('Alamat Orang Tua'); ?>
 <?php echo $form->field($model_student_data_o,'kelurahan')->label('Keluruhan'); ?>
@@ -82,11 +82,11 @@ echo $form->field($model_student_data_o, 'kecamatan')
     ?>
 <?php
     echo $form->field($model_student_data_o, 'penghasilan_ayah')
-        ->dropDownList(\app\models\StudentDataOrangTuaForm::$salary, ['prompt' => 'Pilih Penghasilan Ayah']);
+        ->dropDownList(\app\models\StudentDataOForm::$salary, ['prompt' => 'Pilih Penghasilan Ayah']);
     ?>
 <?php
     echo $form->field($model_student_data_o, 'penghasilan_ibu')
-        ->dropDownList(\app\models\StudentDataOrangTuaForm::$salary, ['prompt' => 'Pilih Penghasilan Ibu']); ?>
+        ->dropDownList(\app\models\StudentDataOForm::$salary, ['prompt' => 'Pilih Penghasilan Ibu']); ?>
 <!-- end of form -->
 <div class="form-group">
     <div>
