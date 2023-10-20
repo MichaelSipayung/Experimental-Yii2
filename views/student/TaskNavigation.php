@@ -1,5 +1,4 @@
 <?php
-namespace app\components;
 use yii\base\Widget;
 use yii\bootstrap5\Button;
 use yii\bootstrap5\ButtonGroup;
@@ -37,17 +36,13 @@ use yii\bootstrap5\ButtonGroup;
 </style>
 </html>
 <?php
-class TaskNavigation extends Widget
-{
-     public function run()
-    {
-        $this->view->registerJs("
-            $('.my-button').click(function() {
-                $('.my-button').removeClass('active');
-                $(this).addClass('active');
-            });
-        ");
-        return ButtonGroup::widget([
+$this->registerJs("
+    $('.my-button').click(function() {
+        $('.my-button').removeClass('active');
+        $(this).addClass('active');
+    });
+");
+        echo  ButtonGroup::widget([
             'options' => ['class' => 'my-button-group'],
             'buttons' => [
                 Button::widget(['label' => 'Data Pribadi', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="http://localhost:8080/index.php?r=student%2Fstudent-extra"']]),
@@ -61,7 +56,5 @@ class TaskNavigation extends Widget
                 Button::widget(['label' => 'Pengumuman', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="/task9"']]),
             ],
         ]);
-    }
-}
 ?>
 

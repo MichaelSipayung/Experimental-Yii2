@@ -1,7 +1,6 @@
 <?php
 
 use app\components\TaskNavigation;
-
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -36,24 +35,6 @@ $config = [
         ],
         //experimental for automatically include all widgets in all views
         //this case is button navigation for student data
-        'view' => [
-            'class' => 'yii\web\View',
-            'as globalWidgets' => [
-                'class' => 'yii\widgets\FragmentCache',
-                'variations' => [
-                    // modify the cache key according to your needs
-                    __FILE__,
-                    isset(Yii::$app) ? Yii::$app->language : null,
-                ],
-                'duration' => 3600,
-            ],
-            'widgets' => [
-                TaskNavigation::class => [
-                    'class' => TaskNavigation::class,
-                ],
-            ],
-            ],
-
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

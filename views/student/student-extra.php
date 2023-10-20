@@ -46,11 +46,16 @@
 </style>
 </html>
 
+
 <?php
 //this is view file for student extra activity information form
 use yii\helpers\Html;
 use yii\bootstrap5\activeForm;
 $title = 'Pengalaman Organisasi';
+?>
+<?php
+//include task navigation component
+include 'TaskNavigation.php';
 ?>
 <?php $form = ActiveForm::begin(['layout' => 'horizontal', 'options' => ['class' => 'my-form']]); ?>
 <?php
