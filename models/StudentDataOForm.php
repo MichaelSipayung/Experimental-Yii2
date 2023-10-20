@@ -72,7 +72,7 @@ class StudentDataOForm extends Model{
           ['nik_ibu','string','min'=>16 , 'max'=>16,'message'=>'NIK harus 16 digit'],
 
           //['tgl_lahir_ayah','date','format'=>'yyyy-mm-dd','message'=>'Format tanggal lahir salah'],
-          ['tanggal_lahir_ayah', 'date', 'format' => 'php:Y-m-d', 'message' => 'Format tanggal lahir salah'],
+          ['tanggal_lahir_ayah', 'date', 'format' => 'yyyy-mm-dd', 'message' => 'Format tanggal lahir salah'],
 
           ['tanggal_lahir_ibu','date','format'=>'yyyy-mm-dd','message'=>'Format tanggal lahir salah'],
 

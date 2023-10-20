@@ -7,6 +7,7 @@ use app\models\Student;
 use app\models\StudentDataDiriForm;
 use app\models\StudentDataOForm;
 use app\models\StudentDataOrangTuaForm;
+use app\models\StudentExtraForm;
 use app\models\StudentLoginForm;
 use app\models\StudentRegisterForm;
 use app\models\StudentResetForm;
@@ -115,7 +116,7 @@ class StudentController extends Controller // StudentController extends the Cont
         return $this->render('student-data-diri',
             ['model_student_data_diri'=>$model_student_data_diri]); //render the personal information page(data diri)
     }
-    public function actionStudentDataOTua(){
+    public function actionStudentDataOTua() {
         $model_student_data_o = new StudentDataOForm(); //create an instance of the StudentDataOForm class
         if($model_student_data_o->load(Yii::$app->request->post())
             && $model_student_data_o->insertDataOTua()){
@@ -125,7 +126,13 @@ class StudentController extends Controller // StudentController extends the Cont
             ['model_student_data_o'=>$model_student_data_o]); //render the parent information page(data orang tua)
     }
     public function actionStudentExtra(){
-
+        $model_student_extra = new StudentExtraForm(); //create an instance of the StudentExtraForm class
+        if($model_student_extra->load(Yii::$app->request->post())
+            && $model_student_extra->insertStudentExtra()){
+            return $this->goBack(); //go to the previous page, customize this to go to the home page
+        }
+        return $this->render('student-extra',
+            ['model_student_extra'=>$model_student_extra]); //render the extra activity page
     }
 }
 ?>
