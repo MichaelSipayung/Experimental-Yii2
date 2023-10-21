@@ -49,7 +49,9 @@ class TaskNavigation extends Widget
         return ButtonGroup::widget([
             'options' => ['class' => 'my-button-group'],
             'buttons' => [
-                Button::widget(['label' => 'Data Pribadi', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="http://localhost:8080/index.php?r=student%2Fstudent-extra"']]),
+                Button::widget(['label' => 'Data Pribadi',
+                    'options' => ['class' => 'my-button',
+                     'onclick' => 'location.href="http://localhost:8080/index.php?r=student%2Fstudent-extra"']]),
                 Button::widget(['label' => 'Data Orangtua', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="/task2"']]),
                 Button::widget(['label' => 'Data Akademik', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="/task3"']]),
                 Button::widget(['label' => 'Bahasa', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="/task4"']]),

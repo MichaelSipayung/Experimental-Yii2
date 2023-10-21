@@ -31,25 +31,30 @@ use yii\bootstrap5\ButtonGroup;
     }
 
     .my-button.active {
-        background-color: #182848;
+        background-color: #b09003;
+        color: white;
     }
 </style>
 </html>
 <?php
-$this->registerJs("
-    $('.my-button').click(function() {
-        $('.my-button').removeClass('active');
-        $(this).addClass('active');
-    });
-");
+//    $this->registerJs("
+//        $('.my-button').click(function() {
+//            $('.my-button').removeClass('active');
+//            $(this).addClass('active');
+//        });
+//    ");
         echo  ButtonGroup::widget([
             'options' => ['class' => 'my-button-group'],
             'buttons' => [
-                Button::widget(['label' => 'Data Pribadi', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="http://localhost:8080/index.php?r=student%2Fstudent-extra"']]),
-                Button::widget(['label' => 'Data Orangtua', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="/task2"']]),
+                Button::widget(['label' => 'Data Pribadi', 'options' => ['class' => 'my-button',
+                'onclick' => 'location.href="http://localhost:8080/index.php?r=student%2Fstudent-data-diri"']]),
+                Button::widget(['label' => 'Data Orangtua', 'options' => ['class' => 'my-button',
+                'onclick' => 'location.href="http://localhost:8080/index.php?r=student%2Fstudent-data-o-tua"']]),
                 Button::widget(['label' => 'Data Akademik', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="/task3"']]),
-                Button::widget(['label' => 'Bahasa', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="/task4"']]),
-                Button::widget(['label' => 'Ekstrakurikuler', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="/task5"']]),
+                Button::widget(['label' => 'Bahasa', 'options' => ['class' => 'my-button',
+                'onclick' => 'location.href="http://localhost:8080/index.php?r=student%2Fstudent-extra"']]),
+                Button::widget(['label' => 'Ekstrakurikuler', 'options' => ['class' => 'my-button',
+                'onclick' => 'location.href="http://localhost:8080/index.php?r=student%2Fstudent-extra"']]),
                 Button::widget(['label' => 'Prestasi', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="/task6"']]),
                 Button::widget(['label' => 'Informasi Del', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="/task7"']]),
                 Button::widget(['label' => 'Biaya dan VA', 'options' => ['class' => 'my-button', 'onclick' => 'location.href="/task8"']]),
