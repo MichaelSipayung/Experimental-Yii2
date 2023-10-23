@@ -1,5 +1,7 @@
 <?php
 namespace app\controllers; //should be put at the top of the file
+use Yii; // Yii is a class that represents the Yii framework
+use yii\web\Controller;
 use app\models\Country;
 use app\models\EntryForm; // EntryForm is a class that represents a form
 use app\models\CountryForm;
@@ -12,9 +14,8 @@ use app\models\StudentLoginForm;
 use app\models\StudentRegisterForm;
 use app\models\StudentResetForm;
 use app\models\StudentTokenForm;
-use Yii; // Yii is a class that represents the Yii framework
 use yii\data\Pagination; // Pagination is a class that represents pagination
-use yii\Web\Controller;
+
 class StudentController extends Controller // StudentController extends the Controller class
 {
     public function actionIndex(): string { // actionIndex() is the default action in a controller

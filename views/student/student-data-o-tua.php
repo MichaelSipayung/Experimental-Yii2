@@ -45,9 +45,9 @@
 </style>
 </html>
 <?php
-use yii\helpers\Html;
-use yii\bootstrap5\activeForm;
-$title = 'Data Orang Tua';
+    use yii\helpers\Html;
+    use yii\bootstrap5\ActiveForm;
+    $title = 'Data Orang Tua';
 ?>
 <?php
 //include task navigation component
