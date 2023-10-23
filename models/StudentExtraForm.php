@@ -51,11 +51,11 @@ class StudentExtraForm extends Model {
 
     //array for store jabaatan values
     public static $jabatan = [
-        '1'=>'Ketua',
-        '2'=>'Wakil Ketua',
-        '3'=>'Sekretaris',
-        '4'=>'Bendahara',
-        '5'=>'Anggota'
+        1=>'Ketua',
+        2=>'Wakil Ketua',
+        3=>'Sekretaris',
+        4=>'Bendahara',
+        5=>'Anggota'
     ];
     //array for store the predikat values
     public static $predikat = [
@@ -80,6 +80,12 @@ class StudentExtraForm extends Model {
             //rule for nama_organisasi, we need to make sure the value is no more than 25 character
             [['nama_organisasi_1','nama_organisasi_2','nama_organisasi_3','nama_organisasi_4',
             'nama_kegiatan_1','nama_kegiatan_2','nama_kegiatan_3','nama_kegiatan_4'], 'string', 'max' => 25],
+            //rules for predikat, we need to make sure the value is in the array
+            [['predikat_kegiatan_1','predikat_kegiatan_2','predikat_kegiatan_3','predikat_kegiatan_4'], 'in', 
+            'range' => array_keys(self::$predikat)],
+            //rules for jabatan, we need to make sure the value is in the array
+            [['jabatan_organisasi_1','jabatan_organisasi_2','jabatan_organisasi_3','jabatan_organisasi_4'], 
+            'in','range' => array_keys(self::$jabatan)],
         ];
     }
     //validate data, this is experimental version, since there are some question about the structure of the table
@@ -138,6 +144,7 @@ class StudentExtraForm extends Model {
                 Yii::$app->db->createCommand()
                     ->update('t_extrakurikuler', $data_kegiatan, 'pendaftar_id = 13547')
                     ->execute();
+
                 //same as above but for organisasi
                 Yii::$app->db->createCommand()
                     ->update('t_organisasi', $data_organisasi, 'pendaftar_id = 13547')

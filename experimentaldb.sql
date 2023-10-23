@@ -30,8 +30,7 @@ create table t_organisasi (
    
     nama_organisasi_1 varchar(255),
     nama_organisasi_2 varchar(255),
-    nama_organisasi_3 varchar(255),insert into t_extrakurikuler (pendaftar_id) values (13547);
-
+    nama_organisasi_3 varchar(255),
     nama_organisasi_4 varchar(255),
 
     jabatan_organisasi_1 int(10),
