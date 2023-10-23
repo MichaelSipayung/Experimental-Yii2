@@ -57,7 +57,14 @@ $title = 'Pengalaman Organisasi';
 //include task navigation component
 include 'TaskNavigation.php';
 ?>
-<?php $form = ActiveForm::begin(['layout' => 'horizontal', 'options' => ['class' => 'my-form']]); ?>
+<?php $form = ActiveForm::begin(['layout' => 'horizontal', 
+'id' => 'student-extra-form',
+'fieldConfig' => [
+    'template' => "{label}\n{input}\n{error}",
+    'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
+    'inputOptions' => ['class' => 'col-lg-3 form-control'],
+    'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],],
+    'options' => ['class' => 'my-form']]); ?>
 <?php
 $title_extra  = "Data Pendidikan Ekstrakurikuler";
 ?>
@@ -543,6 +550,8 @@ viewBox="0 0 16 16"><path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v
             <?=  Html::resetButton('Reset', ['class' => 'btn btn-primary',
                 'style' => 'background-color: #fff; color: #333;']) ?>
             <?= Html::submitButton('Daftarkan', ['class' => 'btn btn-primary',
+                'name' => 'submit-button',
+                'onclick' => 'return confirm("Apakah anda yakin ingin menyimpan informasi extrakurikuler ?");',    
                 'style' => 'background-color: #fff; color: #333;']) ?>
         </div>
     </div>
