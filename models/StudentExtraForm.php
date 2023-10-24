@@ -144,7 +144,11 @@ class StudentExtraForm extends Model {
                 Yii::$app->db->createCommand()
                     ->update('t_extrakurikuler', $data_kegiatan, 'pendaftar_id = 13547')
                     ->execute();
-
+                //insert data to table t_organisasi using insert command
+                Yii::$app->db->createCommand()
+                    ->insert('t_organisasi', $data_organisasi)
+                    ->execute();
+                //insert data only if the data fill by     
                 //same as above but for organisasi
                 Yii::$app->db->createCommand()
                     ->update('t_organisasi', $data_organisasi, 'pendaftar_id = 13547')
