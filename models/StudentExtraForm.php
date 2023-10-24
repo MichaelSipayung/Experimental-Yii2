@@ -2,7 +2,10 @@
 //model for student extra activity form, an idea is merge all form into one model
 //since this is very short, we can put it in one file, for example : Student
 namespace app\models;
+
+use Codeception\PHPUnit\ResultPrinter\HTML;
 use Exception;
+use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Html as ReportHtml;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
@@ -57,15 +60,13 @@ class StudentExtraForm extends Model {
         4=>'Bendahara',
         5=>'Anggota'
     ];
-    //array for store the predikat values
+    //array for store the predikat values, data source is from table t_predikat
     public static $predikat = [
-        '1'=>'Juara 1',
-        '2'=>'Juara 2',
-        '3'=>'Juara 3',
-        '4'=>'Juara Harapan 1',
-        '5'=>'Juara Harapan 2',
-        '6'=>'Juara Harapan 3',
-        '7'=>'Peserta'
+        '1'=>'Cukup',
+        '2'=>'Baik',
+        '3'=>'Sangat Baik',
+        '4'=>'Lulus',
+        '5'=>'Tidak Lulus',
     ];
 
     public function rules(): array
@@ -90,74 +91,128 @@ class StudentExtraForm extends Model {
     }
     //validate data, this is experimental version, since there are some question about the structure of the table
     //but this mechanism is possible to be used, and the table structure can be changed later
+    //for production, we need to make sure the data is valid, and the data is not null and we need pass
+    //an argument to the function, the argument is the id of the student
     public function insertStudentExtra(): bool
     {
         if($this->validate()){
             //before doing insertion or update, we need an exception handling
             try{ //make sure exception is catched
-                $data_kegiatan = [
-                    'nama_kegiatan_1' => $this->nama_kegiatan_1,
-                    'nama_kegiatan_2' => $this->nama_kegiatan_2,
-                    'nama_kegiatan_3' => $this->nama_kegiatan_3,
-                    'nama_kegiatan_4' => $this->nama_kegiatan_4,
-
-                    'predikat_kegiatan_1' => $this->predikat_kegiatan_1,
-                    'predikat_kegiatan_2' => $this->predikat_kegiatan_2,
-                    'predikat_kegiatan_3' => $this->predikat_kegiatan_3,
-                    'predikat_kegiatan_4' => $this->predikat_kegiatan_4,
-
-                    'tanggal_kegiatan_1' => $this->tanggal_organisasi_1,
-                    'tanggal_kegiatan_2' => $this->tanggal_organisasi_2,
-                    'tanggal_kegiatan_3' => $this->tanggal_organisasi_3,
-                    'tanggal_kegiatan_4' => $this->tanggal_organisasi_4,
-
-                    'tanggal_kegiatan_1_end' => $this->tanggal_organisasi_1_end,
-                    'tanggal_kegiatan_2_end' => $this->tanggal_organisasi_2_end,
-                    'tanggal_kegiatan_3_end' => $this->tanggal_organisasi_3_end,
-                    'tanggal_kegiatan_4_end' => $this->tanggal_organisasi_4_end,
-                ];
-
-                $data_organisasi=[
-                    'nama_organisasi_1' => $this->nama_organisasi_1,
-                    'nama_organisasi_2' => $this->nama_organisasi_2,
-                    'nama_organisasi_3' => $this->nama_organisasi_3,
-                    'nama_organisasi_4' => $this->nama_organisasi_4,
-
-                    'jabatan_organisasi_1' => $this->jabatan_organisasi_1,
-                    'jabatan_organisasi_2' => $this->jabatan_organisasi_2,
-                    'jabatan_organisasi_3' => $this->jabatan_organisasi_3,
-                    'jabatan_organisasi_4' => $this->jabatan_organisasi_4,
-
-                    'tanggal_organisasi_1' => $this->tanggal_organisasi_1,
-                    'tanggal_organisasi_2' => $this->tanggal_organisasi_2,
-                    'tanggal_organisasi_3' => $this->tanggal_organisasi_3,
-                    'tanggal_organisasi_4' => $this->tanggal_organisasi_4,
-
-                    'tanggal_organisasi_1_end' => $this->tanggal_organisasi_1_end,
-                    'tanggal_organisasi_2_end' => $this->tanggal_organisasi_2_end,
-                    'tanggal_organisasi_3_end' => $this->tanggal_organisasi_3_end,
-                    'tanggal_organisasi_4_end' => $this->tanggal_organisasi_4_end,
-                ];
-                //due to the structure of the table, we need to use update instead of insert
-                //and we need to use static value for pendaftar_id (experimental version)
-                //thi is will not implemented in the final version, we need more improve in the design of the database
-                Yii::$app->db->createCommand()
-                    ->update('t_extrakurikuler', $data_kegiatan, 'pendaftar_id = 13547')
-                    ->execute();
-                //insert data to table t_organisasi using insert command
-                Yii::$app->db->createCommand()
-                    ->insert('t_organisasi', $data_organisasi)
-                    ->execute();
-                //insert data only if the data fill by     
-                //same as above but for organisasi
-                Yii::$app->db->createCommand()
-                    ->update('t_organisasi', $data_organisasi, 'pendaftar_id = 13547')
-                    ->execute();
-
+                if(strlen($this->nama_kegiatan_1) > 2){ //wisely check if the value is null, need not to push the data
+                    if($this->tanggal_kegiatan_1 && $this->tanggal_kegiatan_1_end && $this->predikat_kegiatan_1){
+                        //if the value is not null, insert the data to table t_extrakurikuler
+                        Yii::$app->db->createCommand()
+                            ->insert('t_extrakurikuler', [
+                                'pendaftar_id' => 13547,
+                                'nama_kegiatan' => $this->nama_kegiatan_1,
+                                'predikat' => $this->predikat_kegiatan_1,
+                                'tanggal_mulai' => $this->tanggal_kegiatan_1,
+                                'tanggal_selesai' => $this->tanggal_kegiatan_1_end,
+                            ])
+                            ->execute();
+                    }
+                }
+                //do the same for the rest of the data
+                if(strlen($this->nama_kegiatan_2) > 2){
+                    if($this->tanggal_kegiatan_2 && $this->tanggal_kegiatan_2_end && $this->predikat_kegiatan_2){
+                        Yii::$app->db->createCommand()
+                            ->insert('t_extrakurikuler', [
+                                'pendaftar_id' => 13547,
+                                'nama_kegiatan' => $this->nama_kegiatan_2,
+                                'predikat' => $this->predikat_kegiatan_2,
+                                'tanggal_mulai' => $this->tanggal_kegiatan_2,
+                                'tanggal_selesai' => $this->tanggal_kegiatan_2_end,
+                            ])
+                            ->execute();
+                    }
+                }
+                if(strlen($this->nama_kegiatan_3) > 2){
+                    if($this->tanggal_kegiatan_3 && $this->tanggal_kegiatan_3_end && $this->predikat_kegiatan_3){
+                        Yii::$app->db->createCommand()
+                            ->insert('t_extrakurikuler', [
+                                'pendaftar_id' => 13547,
+                                'nama_kegiatan' => $this->nama_kegiatan_3,
+                                'predikat' => $this->predikat_kegiatan_3,
+                                'tanggal_mulai' => $this->tanggal_kegiatan_3,
+                                'tanggal_selesai' => $this->tanggal_kegiatan_3_end,
+                            ])
+                            ->execute();
+                    }
+                }
+                if(strlen($this->nama_kegiatan_4) > 2){
+                    if($this->tanggal_kegiatan_4 && $this->tanggal_kegiatan_4_end && $this->predikat_kegiatan_4){
+                        Yii::$app->db->createCommand()
+                            ->insert('t_extrakurikuler', [
+                                'pendaftar_id' => 13547,
+                                'nama_kegiatan' => $this->nama_kegiatan_4,
+                                'predikat' => $this->predikat_kegiatan_4,
+                                'tanggal_mulai' => $this->tanggal_kegiatan_4,
+                                'tanggal_selesai' => $this->tanggal_kegiatan_4_end,
+                            ])
+                            ->execute();
+                    }
+                }
+                //make the same thing for table t_organisasi as well as table t_extrakurikuler
+                if(strlen($this->nama_organisasi_1) > 2){
+                    if($this->tanggal_organisasi_1 && $this->tanggal_organisasi_1_end && $this->jabatan_organisasi_1){
+                        Yii::$app->db->createCommand()
+                            ->insert('t_organisasi', [
+                                'pendaftar_id' => 13547,
+                                'nama_organisasi' => $this->nama_organisasi_1,
+                                'jabatan' => $this->jabatan_organisasi_1,
+                                'tanggal_mulai' => $this->tanggal_organisasi_1,
+                                'tanggal_selesai' => $this->tanggal_organisasi_1_end,
+                            ])
+                            ->execute();
+                    }
+                }
+                if(strlen($this->nama_organisasi_2) > 2){
+                    if($this->tanggal_organisasi_2 && $this->tanggal_organisasi_2_end && $this->jabatan_organisasi_2){
+                        Yii::$app->db->createCommand()
+                            ->insert('t_organisasi', [
+                                'pendaftar_id' => 13547,
+                                'nama_organisasi' => $this->nama_organisasi_2,
+                                'jabatan' => $this->jabatan_organisasi_2,
+                                'tanggal_mulai' => $this->tanggal_organisasi_2,
+                                'tanggal_selesai' => $this->tanggal_organisasi_2_end,
+                            ])
+                            ->execute();
+                    }
+                }
+                if(strlen($this->nama_organisasi_3) > 2){
+                    if($this->tanggal_organisasi_3 && $this->tanggal_organisasi_3_end && $this->jabatan_organisasi_3){
+                        Yii::$app->db->createCommand()
+                            ->insert('t_organisasi', [
+                                'pendaftar_id' => 13547,
+                                'nama_organisasi' => $this->nama_organisasi_3,
+                                'jabatan' => $this->jabatan_organisasi_3,
+                                'tanggal_mulai' => $this->tanggal_organisasi_3,
+                                'tanggal_selesai' => $this->tanggal_organisasi_3_end,
+                            ])
+                            ->execute();
+                    }
+                }
+                if(strlen($this->nama_organisasi_4) > 2){
+                    if($this->tanggal_organisasi_4 && $this->tanggal_organisasi_4_end && $this->jabatan_organisasi_4){
+                        Yii::$app->db->createCommand()
+                            ->insert('t_organisasi', [
+                                'pendaftar_id' => 13547,
+                                'nama_organisasi' => $this->nama_organisasi_4,
+                                'jabatan' => $this->jabatan_organisasi_4,
+                                'tanggal_mulai' => $this->tanggal_organisasi_4,
+                                'tanggal_selesai' => $this->tanggal_organisasi_4_end,
+                            ])
+                            ->execute();
+                    }
+                }
+                //if the data successfully inserted, show bootstrap alert
+                Yii::$app->session->setFlash('success', 'Data extrakurikuler berhasil disimpan');
                 return true;
             }catch(Exception $e){
-                //throw execption if failed
-                echo $e->getMessage();
+                //for debug purpose, show the error message, uncomment the line below for production
+                //Yii::$app->session->setFlash('error', $e->getMessage());
+                //show an error message if the exception is catched using bootstrap aler but encoded the message first
+                Yii::$app->session->setFlash('error', "Something went wrong, please contact the administrator or try again later");
             }   
         }
         return false;
