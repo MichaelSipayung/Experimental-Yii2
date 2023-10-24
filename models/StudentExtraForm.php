@@ -58,7 +58,8 @@ class StudentExtraForm extends Model {
         2=>'Wakil Ketua',
         3=>'Sekretaris',
         4=>'Bendahara',
-        5=>'Anggota'
+        5=>'Anggota',
+        6=>'Lainnya'
     ];
     //array for store the predikat values, data source is from table t_predikat
     public static $predikat = [
@@ -102,26 +103,25 @@ class StudentExtraForm extends Model {
                     if($this->tanggal_kegiatan_1 && $this->tanggal_kegiatan_1_end && $this->predikat_kegiatan_1){
                         //if the value is not null, insert the data to table t_extrakurikuler
                         Yii::$app->db->createCommand()
-                            ->insert('t_extrakurikuler', [
+                            ->insert('t_ekstrakurikuler', [
                                 'pendaftar_id' => 13547,
-                                'nama_kegiatan' => $this->nama_kegiatan_1,
-                                'predikat' => $this->predikat_kegiatan_1,
-                                'tanggal_mulai' => $this->tanggal_kegiatan_1,
-                                'tanggal_selesai' => $this->tanggal_kegiatan_1_end,
+                                'nama' => $this->nama_kegiatan_1,
+                                'predikat_kelulusan_id' => $this->predikat_kegiatan_1,
+                                'mulai' => $this->tanggal_kegiatan_1,
+                                'berakhir' => $this->tanggal_kegiatan_1_end,
                             ])
                             ->execute();
                     }
                 }
-                //do the same for the rest of the data
                 if(strlen($this->nama_kegiatan_2) > 2){
                     if($this->tanggal_kegiatan_2 && $this->tanggal_kegiatan_2_end && $this->predikat_kegiatan_2){
                         Yii::$app->db->createCommand()
-                            ->insert('t_extrakurikuler', [
+                            ->insert('t_ekstrakurikuler', [
                                 'pendaftar_id' => 13547,
-                                'nama_kegiatan' => $this->nama_kegiatan_2,
-                                'predikat' => $this->predikat_kegiatan_2,
-                                'tanggal_mulai' => $this->tanggal_kegiatan_2,
-                                'tanggal_selesai' => $this->tanggal_kegiatan_2_end,
+                                'nama' => $this->nama_kegiatan_2,
+                                'predikat_kelulusan_id' => $this->predikat_kegiatan_2,
+                                'mulai' => $this->tanggal_kegiatan_2,
+                                'berakhir' => $this->tanggal_kegiatan_2_end,
                             ])
                             ->execute();
                     }
@@ -129,12 +129,12 @@ class StudentExtraForm extends Model {
                 if(strlen($this->nama_kegiatan_3) > 2){
                     if($this->tanggal_kegiatan_3 && $this->tanggal_kegiatan_3_end && $this->predikat_kegiatan_3){
                         Yii::$app->db->createCommand()
-                            ->insert('t_extrakurikuler', [
+                            ->insert('t_ekstrakurikuler', [
                                 'pendaftar_id' => 13547,
-                                'nama_kegiatan' => $this->nama_kegiatan_3,
-                                'predikat' => $this->predikat_kegiatan_3,
-                                'tanggal_mulai' => $this->tanggal_kegiatan_3,
-                                'tanggal_selesai' => $this->tanggal_kegiatan_3_end,
+                                'nama' => $this->nama_kegiatan_3,
+                                'predikat_kelulusan_id' => $this->predikat_kegiatan_3,
+                                'mulai' => $this->tanggal_kegiatan_3,
+                                'berakhir' => $this->tanggal_kegiatan_3_end,
                             ])
                             ->execute();
                     }
@@ -142,12 +142,12 @@ class StudentExtraForm extends Model {
                 if(strlen($this->nama_kegiatan_4) > 2){
                     if($this->tanggal_kegiatan_4 && $this->tanggal_kegiatan_4_end && $this->predikat_kegiatan_4){
                         Yii::$app->db->createCommand()
-                            ->insert('t_extrakurikuler', [
+                            ->insert('t_ekstrakurikuler', [
                                 'pendaftar_id' => 13547,
-                                'nama_kegiatan' => $this->nama_kegiatan_4,
-                                'predikat' => $this->predikat_kegiatan_4,
-                                'tanggal_mulai' => $this->tanggal_kegiatan_4,
-                                'tanggal_selesai' => $this->tanggal_kegiatan_4_end,
+                                'nama' => $this->nama_kegiatan_4,
+                                'predikat_kelulusan_id' => $this->predikat_kegiatan_4,
+                                'mulai' => $this->tanggal_kegiatan_4,
+                                'berakhir' => $this->tanggal_kegiatan_4_end,
                             ])
                             ->execute();
                     }
@@ -158,10 +158,10 @@ class StudentExtraForm extends Model {
                         Yii::$app->db->createCommand()
                             ->insert('t_organisasi', [
                                 'pendaftar_id' => 13547,
-                                'nama_organisasi' => $this->nama_organisasi_1,
+                                'nama' => $this->nama_organisasi_1,
                                 'jabatan' => $this->jabatan_organisasi_1,
-                                'tanggal_mulai' => $this->tanggal_organisasi_1,
-                                'tanggal_selesai' => $this->tanggal_organisasi_1_end,
+                                'mulai' => $this->tanggal_organisasi_1,
+                                'berakhir' => $this->tanggal_organisasi_1_end,
                             ])
                             ->execute();
                     }
@@ -171,10 +171,10 @@ class StudentExtraForm extends Model {
                         Yii::$app->db->createCommand()
                             ->insert('t_organisasi', [
                                 'pendaftar_id' => 13547,
-                                'nama_organisasi' => $this->nama_organisasi_2,
+                                'nama' => $this->nama_organisasi_2,
                                 'jabatan' => $this->jabatan_organisasi_2,
-                                'tanggal_mulai' => $this->tanggal_organisasi_2,
-                                'tanggal_selesai' => $this->tanggal_organisasi_2_end,
+                                'mulai' => $this->tanggal_organisasi_2,
+                                'berakhir' => $this->tanggal_organisasi_2_end,
                             ])
                             ->execute();
                     }
@@ -184,10 +184,10 @@ class StudentExtraForm extends Model {
                         Yii::$app->db->createCommand()
                             ->insert('t_organisasi', [
                                 'pendaftar_id' => 13547,
-                                'nama_organisasi' => $this->nama_organisasi_3,
+                                'nama' => $this->nama_organisasi_3,
                                 'jabatan' => $this->jabatan_organisasi_3,
-                                'tanggal_mulai' => $this->tanggal_organisasi_3,
-                                'tanggal_selesai' => $this->tanggal_organisasi_3_end,
+                                'mulai' => $this->tanggal_organisasi_3,
+                                'berakhir' => $this->tanggal_organisasi_3_end,
                             ])
                             ->execute();
                     }
@@ -197,19 +197,19 @@ class StudentExtraForm extends Model {
                         Yii::$app->db->createCommand()
                             ->insert('t_organisasi', [
                                 'pendaftar_id' => 13547,
-                                'nama_organisasi' => $this->nama_organisasi_4,
+                                'nama' => $this->nama_organisasi_4,
                                 'jabatan' => $this->jabatan_organisasi_4,
-                                'tanggal_mulai' => $this->tanggal_organisasi_4,
-                                'tanggal_selesai' => $this->tanggal_organisasi_4_end,
+                                'mulai' => $this->tanggal_organisasi_4,
+                                'berakhir' => $this->tanggal_organisasi_4_end,
                             ])
                             ->execute();
                     }
                 }
                 //if the data successfully inserted, show bootstrap alert
-                Yii::$app->session->setFlash('success', 'Data extrakurikuler berhasil disimpan');
+                Yii::$app->session->setFlash('success', 'Data ekstrakurikuler berhasil disimpan');
                 return true;
             }catch(Exception $e){
-                //for debug purpose, show the error message, uncomment the line below for production
+                //for debug purpose, show the error message, comment the line below for production
                 //Yii::$app->session->setFlash('error', $e->getMessage());
                 //show an error message if the exception is catched using bootstrap aler but encoded the message first
                 Yii::$app->session->setFlash('error', "Something went wrong, please contact the administrator or try again later");
