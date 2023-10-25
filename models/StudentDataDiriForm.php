@@ -133,7 +133,7 @@ class StudentDataDiriForm extends Model {
         ];
     }
 
-    //method for saving data personal information to database
+    //method for saving data personal information to database, todo : exception handler for saving data
     public function insertDataDiri(){
         if($this->validate())
         {
@@ -162,35 +162,8 @@ class StudentDataDiriForm extends Model {
             else {
                 $this->addError('Gagal menyimpan data, silahkan coba lagi !');
             }
-            //insert all data member above to database, an alternative but not recommended
-            /*            Yii::$app->db->createCommand()->insert('t_student', [
-                'nik' => $this->nik,
-                'nisn' => $this->nisn,
-                'no_kps' => $this->no_kps,
-                'nama' => $this->nama,
-                'jenis_kelamin_id' => $this->jenis_kelamin_id,
-                'tanggal_lahir' => $this->tanggal_lahir,
-                'tempat_lahir' => $this->tempat_lahir,
-                'agama_id' => $this->agama_id,
-                'alamat' => $this->alamat,
-                'kelurahan' => $this->kelurahan,
-                'provinsi' => $this->provinsi,
-                'kabupaten' => $this->kabupaten,
-                'alamat_kec' => $this->alamat_kec,
-                'kode_pos' => $this->kode_pos,
-                'no_telepon_rumah' => $this->no_telepon_rumah,
-                'no_telepon_mobile' => $this->no_telepon_mobile,
-                'email' => $this->email,
-            ])->execute();*/
         }
         return false;
-    }
-    //get gender list from database
-    public function getGenderList(): array
-    {
-        $sql = 'SELECT jenis_kelamin FROM t_jenis_kelamin';
-        $result = Yii::$app->db->createCommand($sql)->queryAll();
-        return $result;
     }
 }
 ?>
