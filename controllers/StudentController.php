@@ -14,10 +14,43 @@ use app\models\StudentLoginForm;
 use app\models\StudentRegisterForm;
 use app\models\StudentResetForm;
 use app\models\StudentTokenForm;
+use yii\filters\AccessControl;
+//use app\controllers\AccessControl;
+
 use yii\data\Pagination; // Pagination is a class that represents pagination
 
 class StudentController extends Controller // StudentController extends the Controller class
 {
+    //adding the behaviors() method, to control access to the controller
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class, //use AccessControl class
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['update', 'view'], //allow the update and view actions 
+                        'roles' => ['@'], //allow only authenticated users
+                    ],
+                ],
+            ],
+        ];
+    }
+    //adding the beforeAction() method, to control access to the controller
+    public function beforeAction($action)
+    {
+        if(parent::beforeAction($action)){
+            if(Yii::$app->user->isGuest){ //if the user is a guest
+                return $this->redirect(['student/login']); //redirect to the login page
+            }
+            return true;
+        }
+        else{ //if the user is not a guest
+            return false;
+        }
+    }
+    
     public function actionIndex(): string { // actionIndex() is the default action in a controller
         return $this->render('index');
     }

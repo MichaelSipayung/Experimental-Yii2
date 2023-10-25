@@ -37,13 +37,7 @@ use yii\bootstrap5\ButtonGroup;
 </style>
 </html>
 <?php
-//    $this->registerJs("
-//        $('.my-button').click(function() {
-//            $('.my-button').removeClass('active');
-//            $(this).addClass('active');
-//        });
-//    ");
-        echo  ButtonGroup::widget([
+    echo  ButtonGroup::widget([
             'options' => ['class' => 'my-button-group'],
             'buttons' => [
                 Button::widget(['label' => 'Data Pribadi', 'options' => ['class' => 'my-button',

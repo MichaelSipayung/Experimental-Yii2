@@ -84,52 +84,46 @@ class StudentDataOForm extends Model{
 
           ['nama_ayah_kandung','match','pattern'=>'/^[a-zA-Z ]*$/','message'=>'Nama tidak boleh mengandung angka'],
           ['nama_ibu_kandung','match','pattern'=>'/^[a-zA-Z ]*$/','message'=>'Nama tidak boleh mengandung angka'],
-
           //rules for salary
-
       ];
  }
-    public function insertDataOTua(){
+//method for saving data personal information to database, todo : exception handler for saving data
+//passing argument $id to this method, this argument is the id of student is mandatory (todo)
+public function insertDataOTua(){
         if($this->validate())
         {
-            //insert data to database table with condition pendafar_id = 1
-            $data = [ //possible to change the data members later
-                'nama_ayah_kandung' => $this->nama_ayah_kandung,
-                'nama_ibu_kandung' => $this->nama_ibu_kandung,
-                'nik_ayah' => $this->nik_ayah,
-                'nik_ibu' => $this->nik_ibu,
-
-                'tanggal_lahir_ayah' => $this->tanggal_lahir_ayah,
-                'tanggal_lahir_ibu' => $this->tanggal_lahir_ibu,
-                'pendidikan_ayah_id' => $this->pendidikan_ayah,
-                'pendidikan_ibu_id' => $this->pendidikan_ibu,
-
-                'alamat_orang_tua' => $this->alamat_orang_tua,
-                'kode_pos_orang_tua' => $this->kode_pos_orang_tua,
-                'pekerjaan_ayah_id' => $this->pekerjaan_ayah,
-                'pekerjaan_ibu_id' => $this->pekerjaan_ibu,
-
-                'penghasilan_ayah' => $this->penghasilan_ayah,
-                'penghasilan_ibu' => $this->penghasilan_ibu,
-                'no_hp_orangtua' => $this->no_hp_orangtua,
-
-                'alamat_kec_orangtua' => $this->kecamatan,
-                'alamat_prov_orangtua' => $this->provinsi,
-                'alamat_kel_orangtua' => $this->kelurahan,
-                'alamat_kab_orangtua' => $this->kabupaten,//modify later
-            ];
-            try{ //try to insert data to database, since createCommand() may throw exception
-                Yii::$app->db->createCommand()
-                    ->update('t_pendaftar', $data, 'pendaftar_id = 13547')
-                    ->execute();
-                return true; //return true if success
-            }
-            catch(Exception $e){ //catch exception if any
-                echo $e->getMessage();
+            try{
+                //update data to table t_pendaftar 
+                Yii::$app->db->createCommand()->update('t_pendaftar',[
+                    'nama_ayah_kandung'=>$this->nama_ayah_kandung,
+                    'nama_ibu_kandung'=>$this->nama_ibu_kandung,
+                    'nik_ayah'=>$this->nik_ayah,
+                    'nik_ibu'=>$this->nik_ibu,
+                    'tanggal_lahir_ayah'=>$this->tanggal_lahir_ayah,
+                    'tanggal_lahir_ibu'=>$this->tanggal_lahir_ibu,
+                    'pendidikan_ayah_id'=>$this->pendidikan_ayah,
+                    'pendidikan_ibu_id'=>$this->pendidikan_ibu,
+                    'alamat_orang_tua'=>$this->alamat_orang_tua,
+                    'kode_pos_orang_tua'=>$this->kode_pos_orang_tua,
+                    'pekerjaan_ayah_id'=>$this->pekerjaan_ayah,
+                    'pekerjaan_ibu_id'=>$this->pekerjaan_ibu,
+                    'penghasilan_ayah'=>$this->penghasilan_ayah,
+                    'penghasilan_ibu'=>$this->penghasilan_ibu,
+                    'no_hp_orangtua'=>$this->no_hp_orangtua,
+                    'alamat_kec_orangtua'=>$this->kecamatan,
+                    'alamat_prov_orangtua'=>$this->provinsi,
+                    'alamat_kel_orangtua'=>$this->kelurahan,
+                    'alamat_kab_orangtua'=>$this->kabupaten,
+                ],'pendaftar_id = 13547')->execute();
+                Yii::$app->session->setFlash('success', 'Data orang tua berhasil disimpan');
+                return true;
+            }catch(Exception $e){ //for debugging purpose
+                //set error flash message
+                Yii::$app->session->setFlash('error', "Something went wrong, please contact the administrator or try again later");
+                //echo $e->getMessage();
             }
         }
         return false; //return false if validation failed
-
     }
 }
 ?>
