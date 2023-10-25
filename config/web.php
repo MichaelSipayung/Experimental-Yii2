@@ -20,10 +20,12 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        //uncomment this to set default behavior
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
         ],
+     
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -55,6 +57,8 @@ $config = [
         */
     ],
     'params' => $params,
+    //adding the default behavior for student
+    'defaultRoute' => 'student/index',
 ];
 
 if (YII_ENV_DEV) {

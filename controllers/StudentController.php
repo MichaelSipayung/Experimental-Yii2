@@ -22,7 +22,7 @@ use yii\data\Pagination; // Pagination is a class that represents pagination
 class StudentController extends Controller // StudentController extends the Controller class
 {
     //adding the behaviors() method, to control access to the controller
-    public function behaviors()
+   public function behaviors()
     {
         return [
             'access' => [
@@ -42,7 +42,7 @@ class StudentController extends Controller // StudentController extends the Cont
     {
         if(parent::beforeAction($action)){
             if(Yii::$app->user->isGuest){ //if the user is a guest
-                return $this->redirect(['student/login']); //redirect to the login page
+                return $this->redirect(['student/student-extra']); //redirect to the login page
             }
             return true;
         }
@@ -50,7 +50,10 @@ class StudentController extends Controller // StudentController extends the Cont
             return false;
         }
     }
-    
+    public function actionUpdate(){
+        return $this->render('index');
+    }
+
     public function actionIndex(): string { // actionIndex() is the default action in a controller
         return $this->render('index');
     }
@@ -117,7 +120,8 @@ class StudentController extends Controller // StudentController extends the Cont
         if($model_student_reset->load(Yii::$app->request->post()) && 
             $model_student_reset->resetPassword()){
             //if the form is submitted and the password is reset
-            return $this->goBack(); //go to the previous page, customize this to go to the home page
+            Yii::$app->session->setFlash('success', 'Password berhasil direset. Silakan login untuk melanjutkan.');
+            return $this->redirect(['student/login']);
         }
         //$model_student_reset->password = ''; //clear the password
         return $this->render('reset-password', ['model_student_reset' => $model_student_reset]); //render the reset password page
