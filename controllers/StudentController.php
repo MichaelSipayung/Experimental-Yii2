@@ -15,43 +15,51 @@ use app\models\StudentRegisterForm;
 use app\models\StudentResetForm;
 use app\models\StudentTokenForm;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+
 //use app\controllers\AccessControl;
 
 use yii\data\Pagination; // Pagination is a class that represents pagination
 
 class StudentController extends Controller // StudentController extends the Controller class
 {
-    //adding the behaviors() method, to control access to the controller
-   public function behaviors()
+    public function behaviors() //behavior test for logout and profile update, add other behaviors here
     {
         return [
             'access' => [
-                'class' => AccessControl::class, //use AccessControl class
+                'class' => AccessControl::class,
+                //only registered users can access the following actions : student-data-diri, student-data-o-tua, student-extra
+                'only' => ['student-data-diri', 'student-data-o-tua', 'student-extra'],
                 'rules' => [
                     [
+                        'actions' => ['student-data-diri', 'student-data-o-tua', 'student-extra'],
                         'allow' => true,
-                        'actions' => ['update', 'view'], //allow the update and view actions 
-                        'roles' => ['@'], //allow only authenticated users
+                        'roles' => ['@'],
                     ],
                 ],
             ],
+            'verbs' => [ //restrict the following actions to POST method
+                'class' => VerbFilter::class,
+                'actions'=>[
+                    'student-data-diri'=>['post'],
+                    'student-data-o-tua'=>['post'],
+                    'student-extra'=>['post'],
+                ]
+            ],
         ];
     }
-    //adding the beforeAction() method, to control access to the controller
+    //redirect to the login page if the user is not already logged in
     public function beforeAction($action)
     {
-        if(parent::beforeAction($action)){
-            if(Yii::$app->user->isGuest){ //if the user is a guest
-                return $this->redirect(['student/student-extra']); //redirect to the login page
+        if (in_array($action->id, ['student-data-diri', 'student-data-o-tua', 'student-extra'])) {
+            if (Yii::$app->user->isGuest) {
+                return $this->redirect(['student/login']);
             }
-            return true;
         }
-        else{ //if the user is not a guest
-            return false;
-        }
+        return parent::beforeAction($action);
     }
     public function actionUpdate(){
-        return $this->render('index');
+        return $this->render('entry-confirm');
     }
 
     public function actionIndex(): string { // actionIndex() is the default action in a controller
@@ -97,6 +105,7 @@ class StudentController extends Controller // StudentController extends the Cont
     public function actionLogin()
     {
         if(!Yii::$app->user->isGuest){ //if the user is not a guest
+            Yii::$app->user->logout();
             return $this->goHome(); //go to the home page
         }
         $model_student  = new StudentLoginForm(); //create an instance of the StudentLoginForm class

@@ -47,14 +47,24 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
-        'urlManager' => [
+        //uncomment this to set default behavior
+        /*'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
-        ],
+        ],*/
+        /* 
         */
+        //the modified urlManager will be like this controller/action 
+        'urlManager'=> [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules'=> [
+                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+            ],
+        ],
+        
     ],
     'params' => $params,
     //adding the default behavior for student

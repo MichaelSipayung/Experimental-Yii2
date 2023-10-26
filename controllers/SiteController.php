@@ -15,12 +15,12 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
-   /* public function behaviors()
+   /*public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout'],
+                'only' => ['logout','about'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
@@ -36,8 +36,8 @@ class SiteController extends Controller
                 ],
             ],
         ];
-    }*/
-
+    }
+*/
     /**
      * {@inheritdoc}
      */
